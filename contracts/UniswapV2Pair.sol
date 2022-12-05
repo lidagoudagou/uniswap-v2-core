@@ -161,7 +161,7 @@ contract UniswapV2Pair is IUniswapV2Pair, UniswapV2ERC20 {
         uint amount1 = balance1.sub(_reserve1);
 
         bool feeOn = _mintFee(_reserve0, _reserve1);
-        // ？ 这个变量从哪里来的
+        // 该合约直接继承了UniswapV2ERC20合约，因此可以直接调用UniswapV2ERC20合约中定义的totalSupply，这个值时指的uni代币的总供应量
         uint _totalSupply = totalSupply; // gas savings, must be defined here since totalSupply can update in _mintFee
         if (_totalSupply == 0) {
             // 提供的流动性-最小流动性，为啥这样算出来是流动性
