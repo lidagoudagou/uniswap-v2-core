@@ -60,6 +60,7 @@ contract UniswapV2ERC20 is IUniswapV2ERC20 {
     }
 
     function _approve(address owner, address spender, uint value) private {
+        // 设置授权
         allowance[owner][spender] = value;
         emit Approval(owner, spender, value);
     }
@@ -71,6 +72,7 @@ contract UniswapV2ERC20 is IUniswapV2ERC20 {
         emit Transfer(from, to, value);
     }
 
+    // 对spender进行授权，授予它花费sender账户里的value个uni代币资产
     function approve(address spender, uint value) external returns (bool) {
         _approve(msg.sender, spender, value);
         return true;
@@ -82,8 +84,13 @@ contract UniswapV2ERC20 is IUniswapV2ERC20 {
         return true;
     }
 
+    // 代币授权转移，由其他合约转移from账户资产到to账户
     function transferFrom(address from, address to, uint value) external returns (bool) {
+        // 外部函数调用，如果这个外部调用合约得到from账户授权，那么他就可以从from账户转移value个资产到to账户
+        // 注意这里没有require条件，是不是在其他操作里面隐含了require。
         if (allowance[from][msg.sender] != uint(-1)) {
+            // 减少授权的代币数量
+            // sub方法中的require会进行安全检查
             allowance[from][msg.sender] = allowance[from][msg.sender].sub(value);
         }
         _transfer(from, to, value);
