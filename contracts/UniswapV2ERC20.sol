@@ -9,7 +9,7 @@ contract UniswapV2ERC20 is IUniswapV2ERC20 {
     string public constant name = 'Uniswap V2';
     string public constant symbol = 'UNI-V2';
     uint8 public constant decimals = 18;
-    // TDOD 这个值在pair合约出现过，看看pair是咋访问到这个参数的
+    // TDOD uni代币的总供应量
     uint  public totalSupply;
     // 记录uni代币的各账户（流动性提供者）uni代币的余额
     mapping(address => uint) public balanceOf;
@@ -44,7 +44,7 @@ contract UniswapV2ERC20 is IUniswapV2ERC20 {
     }
 
     function _mint(address to, uint value) internal {
-        // 增加总流动性参数
+        // 增加uni代币总供应量
         totalSupply = totalSupply.add(value);
         // mint uni代币，给to地址增加对应的余额
         balanceOf[to] = balanceOf[to].add(value);
