@@ -9,6 +9,7 @@ import './interfaces/IUniswapV2Factory.sol';
 import './interfaces/IUniswapV2Callee.sol';
 
 // IUniswapV2Pair是实现、UniswapV2ERC20是继承
+// 交易对合约，主要用于更新一些数据、做一些交易之类的操作
 contract UniswapV2Pair is IUniswapV2Pair, UniswapV2ERC20 {
     // 把库函数应用到unit类型，下面代码中的uint类型的函数可以直接调用safemath中的方法
     using SafeMath  for uint;
